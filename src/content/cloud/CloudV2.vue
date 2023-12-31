@@ -7,20 +7,21 @@ import {onMounted} from "vue";
 import {useToast} from "primevue/usetoast";
 import {useSessionStore} from "../../session/useSessionStore.ts";
 
-const folderName = ref<string>('');
 const toast = useToast();
 const session = useSessionStore();
 
+const images = ref<Image[]>([]);
+const folderName = ref<string>('');
+const nextCursor = ref<string | undefined>(undefined);
+const selectedFile = ref<File | undefined>(undefined);
+
 onMounted(async () => {
   console.log(session)
-  await fetchImages(null);
+  await fetchImages(undefined);
 });
 
 
-const images = ref<string[]>([]);
-const nextCursor = ref<string | null>(null);
-
-const fetchImages = async (cursor: string | null) => {
+const fetchImages = async (cursor: string | undefined) => {
   console.log(folderName)
   try {
     const response = await axios.get(`https://cloud-storage-project.onrender.com/api/cloudinary/images/${session.getEmail}`, {
@@ -28,7 +29,7 @@ const fetchImages = async (cursor: string | null) => {
     });
 
     // If cursor is null, it means we are doing a fresh fetch, not loading more.
-    if (cursor === null) {
+    if (cursor === undefined) {
       images.value = [];  // Clear the current images array
     }
 
@@ -39,15 +40,12 @@ const fetchImages = async (cursor: string | null) => {
     console.error('Error fetching images:', error);
   }
 };
-// const loadMore = () => {
-//   if (nextCursor.value) {
-//     fetchImages(nextCursor.value);
-//   }
-// };
-const selectedFile = ref(null);
 
-const handleFileUpload = (event) => {
-  selectedFile.value = event.target.files[0];
+const handleFileUpload = (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  if (input && input.files) {
+    selectedFile.value = input.files[0];
+  }
 };
 
 const uploadImage = async () => {
@@ -57,7 +55,7 @@ const uploadImage = async () => {
   }
   const formData = new FormData();
   formData.append('file', selectedFile.value);
-  formData.append('folderPath', session.getEmail);
+  formData.append('folderPath', session.getEmail || '');
 
 
   try {
@@ -68,9 +66,9 @@ const uploadImage = async () => {
     });
     toast.add({ severity: 'info', summary: '', detail: 'Your file is being uploaded', life: 3000 });
     if (response.data) {
-      await fetchImages(null);
+      await fetchImages(undefined);
 
-      selectedFile.value = null;
+      selectedFile.value = undefined;
       const fileInputElement = document.querySelector('input[type="file"]') as HTMLInputElement;
       if (fileInputElement) {
         fileInputElement.value = ''; // This safely clears the file input

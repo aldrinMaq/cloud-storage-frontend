@@ -1,29 +1,24 @@
 import {defineStore} from 'pinia';
 
-export const useSessionStore = defineStore('session', {
+export const useSessionStore = defineStore({
+    id: 'session',
     state: () => ({
-        email: undefined
+        email: undefined as string | undefined,
     }),
     getters: {
-        getEmail: (state) => state.email
+        getEmail: (state) => state.email,
     },
     actions: {
-        setEmail(newEmail) {
+        setEmail(newEmail: string) {
             this.email = newEmail;
         },
         clearSession() {
             this.email = undefined;
-            // Optionally clear persisted state if used
             localStorage.removeItem('session');
-        }
+        },
     },
     persist: {
-        enabled: true,
-        strategies: [
-            {
-                key: 'my-app-session',
-                storage: localStorage, // or sessionStorage
-            }
-        ]
-    }
+        key: 'my-app-session',
+        storage: window.localStorage,
+    },
 });

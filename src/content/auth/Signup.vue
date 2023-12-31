@@ -4,7 +4,7 @@ import router from "../../router";
 import {computed, ref} from "vue";
 import {defaultUser, User} from "./User.ts";
 import axios from "axios";
-import { useToast } from 'primevue/usetoast';
+import {useToast} from 'primevue/usetoast';
 import Toast from 'primevue/toast';
 
 const toast = useToast();
@@ -15,15 +15,15 @@ const handleCreateAccount = async () => {
   if (signupForm.value) {
     const response = await axios.post('https://cloud-storage-project.onrender.com/api/user/create', signupForm.value);
     if (response.data) {
-      toast.add({ severity: 'success', summary: 'Success', detail: 'Account created!', life: 3000 });
+      toast.add({severity: 'success', summary: 'Success', detail: 'Account created!', life: 3000});
       await createCloudinaryFolderForUser(signupForm.value.email);
     }
     setTimeout(async () => {
       await router.push('/');
-    },2000);
+    }, 2000);
 
   } else {
-    toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create an account!', life: 3000 });
+    toast.add({severity: 'error', summary: 'Error', detail: 'Failed to create an account!', life: 3000});
   }
 };
 
@@ -34,9 +34,10 @@ const isFieldEmpty = computed(() => {
 const createCloudinaryFolderForUser = async (email: string) => {
   try {
     const response = await axios.post(`https://cloud-storage-project.onrender.com/api/cloudinary/create-folder`, null, {
-      params: { folderPath: email }
+      params: {folderPath: email}
     });
-    console.log('Success');
+    if (response.data)
+      console.log('Success');
   } catch (error) {
     console.error('Error creating folder for user:', error);
   }
