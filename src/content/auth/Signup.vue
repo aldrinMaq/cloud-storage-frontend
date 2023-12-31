@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import router from "../../router";
+import router, {baseUrl} from "../../router";
 import {computed, ref} from "vue";
 import {defaultUser, User} from "./User.ts";
 import axios from "axios";
@@ -13,7 +13,7 @@ const signupForm = ref<User>({...defaultUser});
 
 const handleCreateAccount = async () => {
   if (signupForm.value) {
-    const response = await axios.post('https://cloud-storage-project.onrender.com/api/user/create', signupForm.value);
+    const response = await axios.post(`${baseUrl}/api/user/create`, signupForm.value);
     if (response.data) {
       toast.add({severity: 'success', summary: 'Success', detail: 'Account created!', life: 3000});
       await createCloudinaryFolderForUser(signupForm.value.email);
@@ -33,7 +33,7 @@ const isFieldEmpty = computed(() => {
 
 const createCloudinaryFolderForUser = async (email: string) => {
   try {
-    const response = await axios.post(`https://cloud-storage-project.onrender.com/api/cloudinary/create-folder`, null, {
+    const response = await axios.post(`${baseUrl}/api/cloudinary/create-folder`, null, {
       params: {folderPath: email}
     });
     if (response.data)
@@ -43,6 +43,9 @@ const createCloudinaryFolderForUser = async (email: string) => {
   }
 };
 
+const goToLogin = async () => {
+  await router.push('/');
+}
 </script>
 
 <template>
@@ -60,6 +63,9 @@ const createCloudinaryFolderForUser = async (email: string) => {
       </div>
       <div class="col-12">
         <Button :disabled="isFieldEmpty" @click="handleCreateAccount" class="w-full" label="Create account"/>
+      </div>
+      <div class="col-12">
+        <Button @click="goToLogin" class="w-full" label="Login"/>
       </div>
     </div>
   </div>

@@ -6,6 +6,7 @@ import axios from "axios";
 import {onMounted} from "vue";
 import {useToast} from "primevue/usetoast";
 import {useSessionStore} from "../../session/useSessionStore.ts";
+import {baseUrl} from "../../router";
 
 const toast = useToast();
 const session = useSessionStore();
@@ -24,7 +25,7 @@ onMounted(async () => {
 const fetchImages = async (cursor: string | undefined) => {
   console.log(folderName)
   try {
-    const response = await axios.get(`https://cloud-storage-project.onrender.com/api/cloudinary/images/${session.getEmail}`, {
+    const response = await axios.get(`${baseUrl}/api/cloudinary/images/${session.getEmail}`, {
       params: { next_cursor: cursor }
     });
 
@@ -59,7 +60,7 @@ const uploadImage = async () => {
 
 
   try {
-    const response = await axios.post('https://cloud-storage-project.onrender.com/api/images/upload-to-folder', formData, {
+    const response = await axios.post(`${baseUrl}/api/images/upload-to-folder`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -85,7 +86,6 @@ const uploadImage = async () => {
 
 <template>
   <Toast/>
-  {{ JSON.stringify(session.getEmail) }}
   <div class="grid grid-nogutter">
     <div class="col-2">
       <h1>Your Cloud</h1>
