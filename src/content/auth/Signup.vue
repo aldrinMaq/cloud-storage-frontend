@@ -13,7 +13,7 @@ const signupForm = ref<User>({...defaultUser});
 
 const handleCreateAccount = async () => {
   if (signupForm.value) {
-    const response = await axios.post('http://localhost:8080/api/user/create', signupForm.value);
+    const response = await axios.post('https://cloud-storage-project.onrender.com/api/user/create', signupForm.value);
     if (response.data) {
       toast.add({ severity: 'success', summary: 'Success', detail: 'Account created!', life: 3000 });
       await createCloudinaryFolderForUser(signupForm.value.email);
@@ -33,7 +33,7 @@ const isFieldEmpty = computed(() => {
 
 const createCloudinaryFolderForUser = async (email: string) => {
   try {
-    const response = await axios.post(`http://localhost:8080/api/cloudinary/create-folder`, null, {
+    const response = await axios.post(`https://cloud-storage-project.onrender.com/api/cloudinary/create-folder`, null, {
       params: { folderPath: email }
     });
     console.log('Success');

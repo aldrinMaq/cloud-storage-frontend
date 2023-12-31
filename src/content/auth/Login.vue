@@ -17,7 +17,7 @@ const handleSignUp = async () => {
 };
 
 const handleLogin = async () => {
-  const response = await axios.post('/api/user/login', loginForm.value);
+  const response = await axios.post('https://cloud-storage-project.onrender.com/api/user/login', loginForm.value);
   if (response.data) {
     store.setEmail(loginForm.value.email);
     toast.add({ severity: 'success', summary: 'Success', detail: 'User authenticated!', life: 2000 });

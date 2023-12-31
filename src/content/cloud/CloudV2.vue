@@ -23,7 +23,7 @@ const nextCursor = ref<string | null>(null);
 const fetchImages = async (cursor: string | null) => {
   console.log(folderName)
   try {
-    const response = await axios.get(`http://localhost:8080/api/cloudinary/images/${session.getEmail}`, {
+    const response = await axios.get(`https://cloud-storage-project.onrender.com/api/cloudinary/images/${session.getEmail}`, {
       params: { next_cursor: cursor }
     });
 
@@ -61,7 +61,7 @@ const uploadImage = async () => {
 
 
   try {
-    const response = await axios.post('http://localhost:8080/api/images/upload-to-folder', formData, {
+    const response = await axios.post('https://cloud-storage-project.onrender.com/api/images/upload-to-folder', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
