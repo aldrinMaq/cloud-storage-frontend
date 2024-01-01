@@ -21,6 +21,8 @@ const handleSignUp = async () => {
 const handleLogin = async () => {
   try {
     const response = await axios.post(`https://78bd-103-180-201-157.ngrok-free.app/api/user/login`, loginForm.value);
+    console.log('>>>', response.data);
+
     if (response) {
       store.setEmail(loginForm.value.email);
       store.setUsername(response.data.username);
@@ -43,6 +45,7 @@ const handleLogin = async () => {
       toast.add({ severity: 'error', summary: 'Error', detail: 'An unexpected error occurred!', life: 2000 });
     }
   }
+
 };
 
 const isFieldEmpty = computed(() => {
