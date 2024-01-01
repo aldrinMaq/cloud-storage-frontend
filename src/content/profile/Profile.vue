@@ -36,7 +36,7 @@ const handleSaveChanges = async () => {
 const updateUser = async () => {
   try {
     user.value.password = password.value;
-    const response = await axios.put(`${baseUrl}/api/user/update`, user.value);
+    const response = await axios.put(`/api/user/update`, user.value);
     if (response.data) {
       toast.add({severity: 'success', summary: 'Success!', detail: 'Profile updated successfully!', life: 4000});
       session.clearSession();
