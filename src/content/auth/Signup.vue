@@ -18,6 +18,7 @@ const handleCreateAccount = async () => {
   if (signupForm.value) {
     try {
       const response = await axios.post(`${baseUrl}/api/user/create`, signupForm.value);
+      console.log('>>>', response.data)
       if (response.status === 201) {
         toast.add({severity: 'success', summary: 'Success', detail: 'Account created!', life: 3000});
 
