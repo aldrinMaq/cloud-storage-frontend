@@ -89,7 +89,7 @@ const uploadImage = async () => {
 };
 
 const goToSetting = async () => {
-  await router.push('/settings')
+  await router.push('/profile')
 };
 
 const goToHome = async () => {
