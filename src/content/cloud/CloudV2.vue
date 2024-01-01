@@ -17,6 +17,8 @@ const selectedFile = ref<File | undefined>(undefined);
 const selectedFileName = ref('');
 const isLoading = ref(false);
 const isUploadingOrDeleting = ref(false);
+const selectedImages = ref<Image[]>([]);
+const isSelectMode = ref(false);
 
 const fetchImages = async (cursor: string | undefined) => {
   isLoading.value = true;
@@ -53,6 +55,7 @@ const uploadImage = async () => {
   isUploadingOrDeleting.value = true
   if (!selectedFile.value) {
     toast.add({severity: 'warn', summary: '', detail: 'Please select a file first', life: 3000});
+    isUploadingOrDeleting.value = false
     return;
   }
   const formData = new FormData();
@@ -107,8 +110,6 @@ onMounted(async () => {
   }
 });
 
-const selectedImages = ref<Image[]>([]);
-
 const toggleImageSelection = (image: Image) => {
   if (isSelectMode.value) {
     const index = selectedImages.value.indexOf(image);
@@ -157,8 +158,6 @@ const deleteSelectedImages = async () => {
   }
 };
 
-const isSelectMode = ref(false); // true for selection mode, false for navigation
-
 const handleSelectOption = () => {
   isSelectMode.value = !isSelectMode.value; // Toggle the mode
 };
@@ -199,20 +198,21 @@ const handleSelectOption = () => {
       </div>
     </div>
   </div>
-
-  <div v-if="!isSelectMode" class="col-12 xl:col-8 xl:col-offset-2 flex justify-content-end xl:pr-0">
-    <Button @click="handleSelectOption"
-            class="w-full xl:w-16rem h-2rem justify-content-center"
-            label="Select image">
-    </Button>
-  </div>
-  <div v-else class="col-12 xl:col-8 xl:col-offset-2 flex justify-content-end xl:pr-0">
-    <Button @click="deleteSelectedImages"
-            label="Delete Selected Images"
-            class="w-full xl:w-16rem h-2rem justify-content-center"
-            :class="{'bg-red-600' : isSelectMode}">
-    </Button>
-  </div>
+  <template v-if="images.length">
+    <div v-if="!isSelectMode" class="col-12 xl:col-8 xl:col-offset-2 flex justify-content-end xl:pr-0">
+      <Button @click="handleSelectOption"
+              class="w-full xl:w-16rem h-2rem justify-content-center"
+              label="Select image">
+      </Button>
+    </div>
+    <div v-else class="col-12 xl:col-8 xl:col-offset-2 flex justify-content-end xl:pr-0">
+      <Button @click="deleteSelectedImages"
+              label="Delete Selected Images"
+              class="w-full xl:w-16rem h-2rem justify-content-center"
+              :class="{'bg-red-600' : isSelectMode}">
+      </Button>
+    </div>
+  </template>
 
   <ProgressBar v-if="isUploadingOrDeleting" mode="indeterminate" style="height: 6px"></ProgressBar>
   <div v-if="!isLoading" class="grid grid-nogutter h-full">
