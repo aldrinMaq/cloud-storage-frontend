@@ -20,7 +20,7 @@ const handleSignUp = async () => {
 
 const handleLogin = async () => {
   try {
-    const response = await axios.post(`${baseUrl}/api/user/login`, loginForm.value);
+    const response = await axios.post(`https://becd-103-180-201-155.ngrok-free.app/api/user/login`, loginForm.value);
     if (response) {
       store.setEmail(loginForm.value.email);
       store.setUsername(response.data.username);
