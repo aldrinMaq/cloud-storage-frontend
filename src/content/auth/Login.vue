@@ -20,7 +20,7 @@ const handleSignUp = async () => {
 
 const handleLogin = async () => {
   try {
-    const response = await axios.post(`/user/login`, loginForm.value);
+    const response = await axios.post(`api/user/login`, loginForm.value);
     console.log('>>>', response.data);
 
     if (response) {
