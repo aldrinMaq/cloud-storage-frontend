@@ -6,7 +6,5 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "axiosInstance.ts"
-  ]
+  "include": ["vite.config.ts"]
 }
