@@ -2,7 +2,7 @@
 
 import router, {baseUrl} from "../../router";
 import {defaultLoginRequest, LoginRequest} from "./LoginRequest.ts";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useToast} from "primevue/usetoast";
 import axios, {AxiosError} from "axios";
 import Toast from 'primevue/toast';
@@ -22,6 +22,7 @@ const handleLogin = async () => {
     const response = await axios.post(`${baseUrl}/api/user/login`, loginForm.value);
     if (response) {
       store.setEmail(loginForm.value.email);
+      store.setUsername(response.data.username);
       toast.add({ severity: 'success', summary: 'Success', detail: 'User authenticated!', life: 2000 });
       setTimeout(async () => {
         await router.push('/home');
@@ -46,23 +47,46 @@ const isFieldEmpty = computed(() => {
   return loginForm.value.email === '' || loginForm.value.password === '';
 });
 
+onMounted(async () => {
+  if (store.getEmail && store.getUsername) {
+    await router.push('/home');
+  }
+});
+
 </script>
 
 <template>
-  <div class="p-card grid col-6 col-offset-3 mt-8">
-    <div class="flex flex-column w-full gap-2">
-      <Toast/>
-      <div>
-        <InputText v-model="loginForm.email" class="w-full" placeholder="Username"/>
+  <div class="grid grid-nogutter col-12 xl:col-6 xl:col-offset-3 mt-8">
+    <div class="flex flex-column w-full gap-3">
+      <Toast :position="'top-center'"/>
+      <div class="flex justify-content-center">
+        <div class="text-3xl font-bold mb-3">LOGIN</div>
       </div>
-      <div>
-        <InputText v-model="loginForm.password" @keyup.enter="handleLogin" class="w-full" placeholder="Password"/>
+      <div class="flex justify-content-center">
+        <span class="p-float-label">
+          <InputText id="email"
+                     v-model="loginForm.email"
+                     class="w-21rem"
+                     @keyup.enter="handleLogin"/>
+          <label for="email">Email</label>
+        </span>
       </div>
-      <div>
-        <Button @click="handleLogin" :disabled="isFieldEmpty" class="w-full" label="Login"/>
+      <div class="flex justify-content-center">
+        <span class="p-float-label">
+          <Password id="password" v-model="loginForm.password"
+                    input-class="w-21rem"
+                    toggle-mask
+                    :feedback="false"
+                    @keyup.enter="handleLogin"
+          />
+          <label for="username">Password</label>
+        </span>
       </div>
-      <div>
-        <Button @click="handleSignUp" class="w-full" label="Sign up"/>
+      <div class="flex justify-content-center">
+        <Button @click="handleLogin" :disabled="isFieldEmpty" raised class="w-21rem" label="Login"/>
+      </div>
+      <div class="flex justify-content-center">
+        <Button @click="handleSignUp" class="w-21rem" label="Sign up" raised/>
       </div>
     </div>
   </div>

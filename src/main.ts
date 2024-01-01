@@ -10,7 +10,10 @@ import 'primeicons/primeicons.css';
 import Button from "primevue/button";
 import Avatar from "primevue/avatar";
 import InputText from "primevue/inputtext";
+import Password from 'primevue/password';
 import ToastService from 'primevue/toastservice';
+import ProgressBar from 'primevue/progressbar';
+
 import {createPinia} from "pinia";
 import piniaPluginPersistedState from "pinia-plugin-persistedstate"
 
@@ -23,8 +26,11 @@ app.use(router);
 app.use(PrimeVue);
 app.use(ToastService);
 
-
 app.component('InputText', InputText)
 app.component('Avatar', Avatar)
 app.component('Button', Button)
+app.component('Password', Password)
+app.component('ProgressBar', ProgressBar)
+
+
 app.mount('#app')
