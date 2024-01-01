@@ -26,7 +26,6 @@ const fetchImages = async (cursor: string | undefined) => {
     const response = await axios.get(`${baseUrl}/api/cloudinary/images/${session.getUsername}`, {
       params: {next_cursor: cursor}
     });
-    console.log(response.data)
 
     // If cursor is null, it means we are doing a fresh fetch, not loading more.
     if (cursor === undefined) {
