@@ -2,7 +2,7 @@
 
 import {useSessionStore} from "../../session/useSessionStore.ts";
 import {useToast} from "primevue/usetoast";
-import router, {baseUrl} from "../../router";
+import router from "../../router";
 import Toast from 'primevue/toast';
 import {computed, onMounted, ref, watch} from "vue";
 import axios from "axios";

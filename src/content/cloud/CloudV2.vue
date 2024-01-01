@@ -6,7 +6,7 @@ import axios from "axios";
 import {onMounted} from "vue";
 import {useToast} from "primevue/usetoast";
 import {useSessionStore} from "../../session/useSessionStore.ts";
-import router, {baseUrl} from "../../router";
+import router from "../../router";
 
 const toast = useToast();
 const session = useSessionStore();
