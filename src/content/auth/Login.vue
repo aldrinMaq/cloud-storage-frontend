@@ -12,6 +12,7 @@ import {computed} from "vue";
 const loginForm = ref<LoginRequest>({...defaultLoginRequest});
 const toast = useToast();
 const store = useSessionStore();
+const err = ref<AxiosError | null>(null); // Changed to a ref
 
 const handleSignUp = async () => {
   await router.push('signup');
@@ -31,6 +32,7 @@ const handleLogin = async () => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError;
+      err.value = axiosError; // Set the error
       if (axiosError.response && axiosError.response.status === 401) {
         toast.add({ severity: 'error', summary: 'Error', detail: 'Incorrect username/password!', life: 2000 });
       } else {
@@ -88,6 +90,7 @@ onMounted(async () => {
       <div class="flex justify-content-center">
         <Button @click="handleSignUp" class="w-21rem" label="Sign up" raised/>
       </div>
+      Error:  {{ JSON.stringify(err)}}
     </div>
   </div>
 </template>
