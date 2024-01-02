@@ -26,7 +26,7 @@ const fetchImages = async (cursor: string | undefined) => {
     const response = await apiClient.get(`/api/cloudinary/images/${session.getUsername}`, {
       params: {next_cursor: cursor}
     });
-
+    console.log('Response data:', response.data); // Log the response data here
     // If cursor is null, it means we are doing a fresh fetch, not loading more.
     if (cursor === undefined) {
       images.value = [];  // Clear the current images array
