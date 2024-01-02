@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import router from "../../router";
+import router, {baseUrl} from "../../router";
 import {defaultLoginRequest, LoginRequest} from "./LoginRequest.ts";
 import {onMounted, ref} from "vue";
 import {useToast} from "primevue/usetoast";

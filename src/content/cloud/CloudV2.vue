@@ -141,7 +141,7 @@ const deleteSelectedImages = async () => {
     });
 
     if (response.status === 200) {
-      toast.add({severity: 'success', summary: 'Success', detail: 'Image/s deleted successfully', life: 3000});
+      toast.add({severity: 'success', summary: 'Success', detail: 'Images deleted successfully', life: 3000});
 
       // Optionally, refresh the images list or remove deleted images from the local state
       await fetchImages(undefined);
