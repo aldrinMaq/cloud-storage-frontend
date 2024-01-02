@@ -12,7 +12,6 @@ const toast = useToast();
 const store = useSessionStore();
 
 const signupForm = ref<User>({...defaultUser});
-const err = ref<AxiosError | null>(null); // Changed to a ref
 
 const handleCreateAccount = async () => {
   if (signupForm.value) {
@@ -32,8 +31,6 @@ const handleCreateAccount = async () => {
       if (axios.isAxiosError(error)) {
         // Now we know this is an AxiosError and can access error.response, etc.
         const serverError = error as AxiosError;
-        err.value = serverError; // Set the error
-
         if (serverError && serverError.response) {
           toast.add({severity: 'error', summary: 'Error', detail: serverError.response.data, life: 3000});
         }
@@ -119,7 +116,6 @@ onMounted(async () => {
         <Button @click="goToLogin" class="w-21rem" label="Login" raised/>
       </div>
     </div>
-    Error:  {{ JSON.stringify(err)}}
   </div>
 </template>
 
