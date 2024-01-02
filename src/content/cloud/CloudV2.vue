@@ -163,7 +163,7 @@ const handleSelectOption = () => {
 </script>
 
 <template>
-  <Toast :position="'top-center'"/>
+  <Toast/>
   <div class="grid grid-nogutter">
     <div class="col-12 xl:col-2 sm:col-12 ">
       <h1 class="cursor-pointer flex justify-content-center" @click="goToHome">Your Cloud</h1>
