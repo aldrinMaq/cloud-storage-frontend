@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import router, {baseUrl} from "../../router";
+import router from "../../router";
 import {defaultLoginRequest, LoginRequest} from "./LoginRequest.ts";
 import {onMounted, ref} from "vue";
 import {useToast} from "primevue/usetoast";
@@ -20,7 +20,7 @@ const handleSignUp = async () => {
 
 const handleLogin = async () => {
   try {
-    const response = await axios.post(`${baseUrl}/api/user/login`, loginForm.value);
+    const response = await axios.post(`https://78bd-103-180-201-157.ngrok-free.app/api/user/login`, loginForm.value);
     console.log('>>>', response.data);
 
     if (response) {
