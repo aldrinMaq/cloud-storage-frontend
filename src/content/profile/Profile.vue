@@ -66,7 +66,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <Toast/>
+  <Toast :position="'top-center'"/>
   <div class="grid grid-nogutter col-12 xl:col-6 xl:col-offset-3 mt-8">
     <div class="flex flex-column w-full gap-3">
       <div class="flex justify-content-center">

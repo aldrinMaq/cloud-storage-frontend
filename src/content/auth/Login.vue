@@ -59,7 +59,7 @@ onMounted(async () => {
 <template>
   <div class="grid grid-nogutter col-12 xl:col-6 xl:col-offset-3 mt-8">
     <div class="flex flex-column w-full gap-3">
-      <Toast/>
+      <Toast :position="'top-center'"/>
       <div class="flex justify-content-center">
         <div class="text-3xl font-bold mb-3">LOGIN</div>
       </div>
