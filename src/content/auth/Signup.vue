@@ -7,7 +7,6 @@ import axios, {AxiosError} from "axios";
 import {useToast} from 'primevue/usetoast';
 import Toast from 'primevue/toast';
 import {useSessionStore} from "../../session/useSessionStore.ts";
-import apiClient from "../../router/axiosInstance.ts";
 
 const toast = useToast();
 const store = useSessionStore();
@@ -18,7 +17,7 @@ const err = ref<AxiosError | null>(null); // Changed to a ref
 const handleCreateAccount = async () => {
   if (signupForm.value) {
     try {
-      const response = await apiClient.post(`/api/user/create`, signupForm.value);
+      const response = await axios.post(`/api/user/create`, signupForm.value);
       console.log('>>>', response.data)
       if (response.status === 201) {
         toast.add({severity: 'success', summary: 'Success', detail: 'Account created!', life: 3000});

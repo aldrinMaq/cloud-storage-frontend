@@ -2,11 +2,11 @@
 
 import Toast from 'primevue/toast';
 import {computed, ref} from "vue";
+import axios from "axios";
 import {onMounted} from "vue";
 import {useToast} from "primevue/usetoast";
 import {useSessionStore} from "../../session/useSessionStore.ts";
 import router from "../../router";
-import apiClient from "../../router/axiosInstance.ts";
 
 const toast = useToast();
 const session = useSessionStore();
@@ -23,7 +23,7 @@ const isSelectMode = ref(false);
 const fetchImages = async (cursor: string | undefined) => {
   isLoading.value = true;
   try {
-    const response = await apiClient.get(`/api/cloudinary/images/${session.getUsername}`, {
+    const response = await axios.get(`/api/cloudinary/images/${session.getUsername}`, {
       params: {next_cursor: cursor}
     });
 
@@ -62,7 +62,7 @@ const uploadImage = async () => {
   formData.append('folderPath', session.getUsername || '');
 
   try {
-    const response = await apiClient.post(`/api/images/upload-to-folder`, formData, {
+    const response = await axios.post(`/api/images/upload-to-folder`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -133,7 +133,7 @@ const deleteSelectedImages = async () => {
   }
 
   try {
-    const response = await apiClient.delete(`/api/cloudinary/delete`, {
+    const response = await axios.delete(`/api/cloudinary/delete`, {
       headers: {
         'Content-Type': 'application/json'
       },

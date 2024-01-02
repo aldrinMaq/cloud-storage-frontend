@@ -5,8 +5,8 @@ import {useToast} from "primevue/usetoast";
 import router from "../../router";
 import Toast from 'primevue/toast';
 import {computed, onMounted, ref, watch} from "vue";
+import axios from "axios";
 import {defaultUserUpdateDTO, UserUpdateDTO} from "./UserUpdateDTO.ts";
-import apiClient from "../../router/axiosInstance.ts";
 
 const session = useSessionStore();
 const toast = useToast();
@@ -36,7 +36,7 @@ const handleSaveChanges = async () => {
 const updateUser = async () => {
   try {
     user.value.password = password.value;
-    const response = await apiClient.put(`/api/user/update`, user.value);
+    const response = await axios.put(`/api/user/update`, user.value);
     if (response.data) {
       toast.add({severity: 'success', summary: 'Success!', detail: 'Profile updated successfully!', life: 4000});
       session.clearSession();

@@ -8,7 +8,6 @@ import axios, {AxiosError} from "axios";
 import Toast from 'primevue/toast';
 import {useSessionStore} from "../../session/useSessionStore.ts";
 import {computed} from "vue";
-import apiClient from "../../router/axiosInstance.ts";
 
 const loginForm = ref<LoginRequest>({...defaultLoginRequest});
 const toast = useToast();
@@ -21,7 +20,7 @@ const handleSignUp = async () => {
 
 const handleLogin = async () => {
   try {
-    const response = await apiClient.post(`api/user/login`, loginForm.value);
+    const response = await axios.post(`api/user/login`, loginForm.value);
     console.log('>>>', response.data);
 
     if (response) {
