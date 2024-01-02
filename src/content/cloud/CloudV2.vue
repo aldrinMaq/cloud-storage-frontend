@@ -23,7 +23,7 @@ const isSelectMode = ref(false);
 const fetchImages = async (cursor: string | undefined) => {
   isLoading.value = true;
   try {
-    const response = await axios.get(`/api/cloudinary/images/${session.getUsername}`, {
+    const response = await axios.get(`${baseUrl}/api/cloudinary/images/${session.getUsername}`, {
       params: {next_cursor: cursor}
     });
 
@@ -62,7 +62,7 @@ const uploadImage = async () => {
   formData.append('folderPath', session.getUsername || '');
 
   try {
-    const response = await axios.post(`/api/images/upload-to-folder`, formData, {
+    const response = await axios.post(`${baseUrl}/api/images/upload-to-folder`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -133,7 +133,7 @@ const deleteSelectedImages = async () => {
   }
 
   try {
-    const response = await axios.delete(`/api/cloudinary/delete`, {
+    const response = await axios.delete(`${baseUrl}/api/cloudinary/delete`, {
       headers: {
         'Content-Type': 'application/json'
       },
