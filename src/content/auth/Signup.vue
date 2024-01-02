@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import router from "../../router";
+import router, {baseUrl} from "../../router";
 import {computed, onMounted, ref} from "vue";
 import {defaultUser, User} from "./User.ts";
 import axios, {AxiosError} from "axios";
