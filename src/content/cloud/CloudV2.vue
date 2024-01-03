@@ -105,6 +105,7 @@ const firstInitial = computed(() => {
 });
 
 onMounted(async () => {
+  selectedFile.value = undefined;
   if (!session.getEmail) {
     await router.push('/login')
   } else {
