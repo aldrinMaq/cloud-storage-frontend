@@ -30,7 +30,6 @@ const fetchImages = async (cursor: string | undefined) => {
         'ngrok-skip-browser-warning': 'true',
       },
     });
-    console.log(response.data)
     // If cursor is null, it means we are doing a fresh fetch, not loading more.
     if (cursor === undefined) {
       images.value = [];  // Clear the current images array
@@ -73,10 +72,11 @@ const uploadImage = async () => {
       }
     });
     if (response.data) {
+      toast.add({severity: 'success', summary: 'Success', detail: 'File uploaded successfully!', life: 3000});
+      
       setTimeout(async () => {
         await fetchImages(undefined);
-      }, 2000); // Adjust the delay as needed
-      console.log(response.data)
+      }, 3000); // Adjust the delay as needed
       selectedFile.value = undefined;
       selectedFileName.value = '';
       const fileInputElement = document.querySelector('input[type="file"]') as HTMLInputElement;
@@ -84,8 +84,6 @@ const uploadImage = async () => {
         fileInputElement.value = ''; // This safely clears the file input
       }
     }
-    toast.add({severity: 'success', summary: 'Success', detail: 'File uploaded successfully!', life: 3000});
-    // Handle the response as needed, e.g., displaying the uploaded image
   } catch (error) {
     toast.add({severity: 'error', summary: 'Error uploading the file!', detail: 'File size exceeds 10MB limit!', life: 4000});
   } finally {
