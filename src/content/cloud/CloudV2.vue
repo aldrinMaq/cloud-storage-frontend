@@ -212,7 +212,7 @@ const handleSelectOption = () => {
       </div>
     </div>
 
-    <div class="col-10 xl:col-4 flex justify-content-end mb-2">
+    <div class="col-10 xl:col-4 flex justify-content-end ">
       <div class="px-2 flex justify-content-between xl:justify-content-end align-items-center gap-2 w-full">
         <!-- Custom styled label for the file input -->
         <label for="file-upload" class="custom-file-label mt-1 ">Choose File</label>
