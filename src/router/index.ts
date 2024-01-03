@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 // export const baseUrl = 'https://cloud-storage-project.onrender.com';
 
-export const baseUrl = 'https://5d0d-2001-4455-266-d800-e540-a8ee-6a3c-b78f.ngrok-free.app';
+export const baseUrl = 'https://262b-2001-4455-266-d800-e540-a8ee-6a3c-b78f.ngrok-free.app';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
