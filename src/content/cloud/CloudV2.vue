@@ -202,20 +202,20 @@ const handleSelectOption = () => {
     <div class="col-12 xl:col-2 sm:col-12 ">
       <h1 class="cursor-pointer flex justify-content-center" @click="goToHome">Your Cloud</h1>
     </div>
-    <div class="grid-nogutter col-12 xl:col-4 sm:col-5 flex align-items-center mb-2">
-      <span class="p-input-icon-left w-full pr-2">
+    <div class="grid-nogutter col-12 xl:col-4 flex align-items-center mb-2">
+      <span class="p-input-icon-left w-full px-2">
               <i class="pi pi-search"/>
               <InputText class="w-full border-round-left-2xl	border-round-right-2xl"
                          placeholder="Search in cloud"
                          v-model="searchVal"/>
       </span>
       <div class="col-2">
-        <Button @click="searchImagesByDisplayName" label="Search" />
+        <Button @click="searchImagesByDisplayName" label="Search" class="w-full"/>
       </div>
     </div>
 
-    <div class="col-10 xl:col-4 sm:col-6 flex justify-content-end mb-2">
-      <div class="pr-2 flex justify-content-between xl:justify-content-end align-items-center gap-2 w-full">
+    <div class="col-10 xl:col-4 flex justify-content-end mb-2">
+      <div class="px-2 flex justify-content-between xl:justify-content-end align-items-center gap-2 w-full">
         <!-- Custom styled label for the file input -->
         <label for="file-upload" class="custom-file-label mt-1 ">Choose File</label>
         <span v-if="selectedFileName" class="mt-1 w-7rem file-name-display surface-overlay white-space-nowrap overflow-hidden text-overflow-ellipsis">
@@ -229,7 +229,7 @@ const handleSelectOption = () => {
         </Button>
       </div>
     </div>
-    <div class="col-2 xl:col-2 sm:col-1 flex justify-content-end">
+    <div class="col-2 xl:col-2 flex justify-content-end">
       <div @click="goToSetting" class="flex align-items-center xl:mr-6 cursor-pointer">
 <!--        <i class="pi pi-cog text-5xl"></i>-->
         <Avatar :label="firstInitial" class="mr-2" size="large" style="background-color:#2196F3; color: #ffffff" shape="circle" />
