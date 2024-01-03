@@ -73,7 +73,7 @@ const uploadImage = async () => {
     });
     if (response.data) {
       toast.add({severity: 'success', summary: 'Success', detail: 'File uploaded successfully!', life: 3000});
-      
+
       setTimeout(async () => {
         await fetchImages(undefined);
       }, 3000); // Adjust the delay as needed
@@ -208,7 +208,7 @@ const handleSelectOption = () => {
                          v-model="searchVal"/>
       </span>
       <div class="col-2">
-        <Button @click="searchImagesByDisplayName" label="Search" class="w-full"/>
+        <Button @click="searchImagesByDisplayName" label="Search" class="w-full px-0"/>
       </div>
     </div>
 
