@@ -256,7 +256,7 @@ const handleSelectOption = () => {
   <div v-if="!isLoading" class="grid grid-nogutter h-full">
     <div class="col-12 xl:col-8 xl:col-offset-2">
       <div class="grid grid-nogutter flex justify-content-start">
-        <div class="col-4 sm:col-3 md:col-3 lg:col-2 xl:col-2 h-10rem mt-2 cursor-pointer p-1 mb-2" v-for="image in images"
+        <div class="col-4 sm:col-3 md:col-3 lg:col-2 xl:col-2 h-8rem sm:h-9rem md:h-10rem xl:h-11rem mt-2 cursor-pointer p-1 mb-2" v-for="image in images"
              :key="image.asset_id"
              :class="{ 'selected-border': selectedImages && selectedImages.includes(image) }"
              @click="toggleImageSelection(image)">
