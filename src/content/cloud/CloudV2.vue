@@ -19,6 +19,7 @@ const isLoading = ref(false);
 const isUploadingOrDeleting = ref(false);
 const selectedImages = ref<Image[]>([]);
 const isSelectMode = ref(false);
+const searchVal = ref('');
 
 const fetchImages = async (cursor: string | undefined) => {
   isLoading.value = true;
@@ -46,6 +47,7 @@ const fetchImages = async (cursor: string | undefined) => {
 };
 
 const handleFileUpload = (event: Event) => {
+  searchVal.value = '';
   const input = event.target as HTMLInputElement;
   if (input && input.files && input.files.length > 0) {
     selectedFile.value = input.files[0];
@@ -74,7 +76,7 @@ const uploadImage = async () => {
       setTimeout(async () => {
         await fetchImages(undefined);
       }, 2000); // Adjust the delay as needed
-
+      console.log(response.data)
       selectedFile.value = undefined;
       selectedFileName.value = '';
       const fileInputElement = document.querySelector('input[type="file"]') as HTMLInputElement;
@@ -160,6 +162,35 @@ const deleteSelectedImages = async () => {
   }
 };
 
+const searchImagesByDisplayName = async () => {
+  isLoading.value = true;
+  try {
+    // Assuming 'session.getUsername' gives the folder name.
+    const folderName = session.getUsername;
+
+    const response = await axios.get(`${baseUrl}/api/cloudinary/search`, {
+      params: {
+        folderName: folderName,
+        displayName: searchVal.value // The displayName parameter
+      },
+      headers: {
+        'ngrok-skip-browser-warning': 'true',
+      },
+    });
+    // Handle the search results
+    images.value = response.data.resources;
+    if (!images.value.length) {
+      toast.add({severity: 'info', summary: '', detail: 'No results found.', life: 3000});
+    }
+    nextCursor.value = undefined; // Reset pagination
+  } catch (error) {
+    console.error('Error searching images by display name:', error);
+    toast.add({severity: 'error', summary: 'Search Error', detail: 'Failed to search images by display name', life: 3000});
+  } finally {
+    isLoading.value = false;
+  }
+};
+
 const handleSelectOption = () => {
   isSelectMode.value = !isSelectMode.value; // Toggle the mode
 };
@@ -171,15 +202,20 @@ const handleSelectOption = () => {
     <div class="col-12 xl:col-2 sm:col-12 ">
       <h1 class="cursor-pointer flex justify-content-center" @click="goToHome">Your Cloud</h1>
     </div>
-    <div class="col-12 xl:col-4 sm:col-5 flex align-items-center mb-2">
-      <span class="p-input-icon-left w-full">
+    <div class="grid-nogutter col-12 xl:col-4 sm:col-5 flex align-items-center mb-2">
+      <span class="p-input-icon-left w-full pr-2">
               <i class="pi pi-search"/>
               <InputText class="w-full border-round-left-2xl	border-round-right-2xl"
-                         placeholder="Search in cloud"/>
+                         placeholder="Search in cloud"
+                         v-model="searchVal"/>
       </span>
+      <div class="col-2">
+        <Button @click="searchImagesByDisplayName" label="Search" />
+      </div>
     </div>
+
     <div class="col-10 xl:col-4 sm:col-6 flex justify-content-end mb-2">
-      <div class="flex justify-content-between xl:justify-content-end align-items-center gap-2 w-full">
+      <div class="pr-2 flex justify-content-between xl:justify-content-end align-items-center gap-2 w-full">
         <!-- Custom styled label for the file input -->
         <label for="file-upload" class="custom-file-label mt-1 ">Choose File</label>
         <span v-if="selectedFileName" class="mt-1 w-7rem file-name-display surface-overlay white-space-nowrap overflow-hidden text-overflow-ellipsis">
@@ -220,11 +256,14 @@ const handleSelectOption = () => {
   <div v-if="!isLoading" class="grid grid-nogutter h-full">
     <div class="col-12 xl:col-8 xl:col-offset-2">
       <div class="grid grid-nogutter flex justify-content-start">
-        <div class="col-4 sm:col-3 md:col-3 lg:col-2 xl:col-2 h-10rem mt-2 cursor-pointer p-1" v-for="image in images"
+        <div class="col-4 sm:col-3 md:col-3 lg:col-2 xl:col-2 h-10rem mt-2 cursor-pointer p-1 mb-2" v-for="image in images"
              :key="image.asset_id"
              :class="{ 'selected-border': selectedImages && selectedImages.includes(image) }"
              @click="toggleImageSelection(image)">
           <img class="w-full h-full" :src="image.secure_url" :alt="image.display_name"/>
+          <div class=" w-fullsurface-overlay white-space-nowrap overflow-hidden text-overflow-ellipsis">
+            {{ image.display_name }}.{{ image.format }}
+          </div>
         </div>
       </div>
     </div>

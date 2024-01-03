@@ -4,5 +4,6 @@ interface Image {
     display_name: string;
     public_id: string;
     version: string;
+    format: string;
 }
 
