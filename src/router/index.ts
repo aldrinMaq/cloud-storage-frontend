@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // export const baseUrl = 'https://cloud-storage-project.onrender.com';
-
-export const baseUrl = 'https://cloud-storage-project.onrender.com';
+// https://cloud-storage-g8vy.onrender.com
+export const baseUrl = 'https://cloud-storage-g8vy.onrender.com';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
