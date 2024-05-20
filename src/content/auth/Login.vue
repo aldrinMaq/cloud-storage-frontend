@@ -19,11 +19,14 @@ const handleSignUp = async () => {
 
 const handleLogin = async () => {
   try {
+    isLoading.value = true;
+
     const response = await axios.post(`${baseUrl}/api/user/login`, loginForm.value);
     if (response) {
       store.setEmail(loginForm.value.email);
       store.setUsername(response.data.username);
       toast.add({ severity: 'success', summary: 'Success', detail: 'User authenticated!', life: 2000 });
+      isLoading.value = false;
       setTimeout(async () => {
         await router.push('/home');
       }, 2000);
@@ -40,6 +43,8 @@ const handleLogin = async () => {
       // Handle non-Axios errors
       toast.add({ severity: 'error', summary: 'Error', detail: 'An unexpected error occurred!', life: 2000 });
     }
+  } finally {
+    isLoading.value = false;
   }
 
 };
@@ -53,6 +58,7 @@ onMounted(async () => {
     await router.push('/home');
   }
 });
+const isLoading = ref(false);
 
 </script>
 
@@ -84,7 +90,14 @@ onMounted(async () => {
         </span>
       </div>
       <div class="flex justify-content-center">
-        <Button @click="handleLogin" :disabled="isFieldEmpty" raised class="w-21rem" label="Login"/>
+        <Button @click="handleLogin" :disabled="isFieldEmpty || isLoading" raised class="w-21rem flex justify-content-center" label="Login">
+          <div v-if="!isLoading" >Login</div>
+          <div v-else >Logging in
+            <span v-if="isLoading" class="pi pi-spin pi-spinner">
+            </span>
+          </div>
+        </Button>
+
       </div>
       <div class="flex justify-content-center">
         <Button @click="handleSignUp" class="w-21rem" label="Sign up" raised/>
