@@ -26,7 +26,6 @@ const handleLogin = async () => {
       store.setEmail(loginForm.value.email);
       store.setUsername(response.data.username);
       toast.add({ severity: 'success', summary: 'Success', detail: 'User authenticated!', life: 2000 });
-      isLoading.value = false;
       setTimeout(async () => {
         await router.push('/home');
       }, 2000);
