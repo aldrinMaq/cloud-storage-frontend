@@ -12,6 +12,7 @@ import {computed} from "vue";
 const loginForm = ref<LoginRequest>({...defaultLoginRequest});
 const toast = useToast();
 const store = useSessionStore();
+const isLoading = ref(false);
 
 const handleSignUp = async () => {
   await router.push('signup');
@@ -57,7 +58,6 @@ onMounted(async () => {
     await router.push('/home');
   }
 });
-const isLoading = ref(false);
 
 </script>
 

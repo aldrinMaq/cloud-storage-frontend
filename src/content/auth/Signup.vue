@@ -12,10 +12,12 @@ const toast = useToast();
 const store = useSessionStore();
 
 const signupForm = ref<User>({...defaultUser});
+const isLoading = ref(false);
 
 const handleCreateAccount = async () => {
   if (signupForm.value) {
     try {
+      isLoading.value = true;
       const response = await axios.post(`${baseUrl}/api/user/create`, signupForm.value);
       console.log(response.data)
       if (response.status === 201) {
@@ -38,6 +40,8 @@ const handleCreateAccount = async () => {
         // Handle non-Axios errors
         toast.add({severity: 'error', summary: 'Error', detail: 'An unexpected error occurred', life: 3000});
       }
+    } finally {
+      isLoading.value = false;
     }
   } else {
     toast.add({severity: 'error', summary: 'Error', detail: 'Failed to create an account!', life: 3000});
@@ -110,7 +114,13 @@ onMounted(async () => {
         </span>
       </div>
       <div class="flex justify-content-center">
-        <Button :disabled="isFieldEmpty" @click="handleCreateAccount" raised class="w-21rem" label="Create account"/>
+        <Button :disabled="isFieldEmpty || isLoading" @click="handleCreateAccount" raised class="w-21rem flex justify-content-center" label="Create account">
+          <div v-if="!isLoading" >Create account</div>
+          <div v-else >Creating account
+            <span v-if="isLoading" class="pi pi-spin pi-spinner">
+            </span>
+          </div>
+        </Button>
       </div>
       <div class="flex justify-content-center">
         <Button @click="goToLogin" class="w-21rem" label="Login" raised/>
