@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // https://cloud-storage-g8vy.onrender.com
 // Test commit 
 // export const baseUrl = 'http://localhost:8080';
-export const baseUrl = 'https://cloud-storage-g8vy.onrender.com';
+export const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
