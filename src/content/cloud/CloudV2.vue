@@ -264,6 +264,9 @@ const handleSelectOption = () => {
             {{ image.display_name }}.{{ image.format }}
           </div>
         </div>
+        <div class="flex justify-content-center w-full text-2xl mt-8">
+          <div class="text-black-alpha-60">No data found!</div>
+        </div>
       </div>
     </div>
   </div>
