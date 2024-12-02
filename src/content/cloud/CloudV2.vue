@@ -255,7 +255,7 @@ const handleSelectOption = () => {
   <div v-if="!isLoading" class="grid grid-nogutter h-full">
     <div class="col-12 xl:col-8 xl:col-offset-2">
       <div class="grid grid-nogutter flex justify-content-start">
-        <div class="col-4 sm:col-3 md:col-3 lg:col-2 xl:col-2 h-8rem sm:h-9rem md:h-10rem xl:h-11rem mt-2 cursor-pointer p-1 mb-2" v-for="image in images"
+        <div v-if="images.length > 0" v-for="image in images" class="col-4 sm:col-3 md:col-3 lg:col-2 xl:col-2 h-8rem sm:h-9rem md:h-10rem xl:h-11rem mt-2 cursor-pointer p-1 mb-2"
              :key="image.asset_id"
              :class="{ 'selected-border': selectedImages && selectedImages.includes(image) }"
              @click="toggleImageSelection(image)">
@@ -264,9 +264,11 @@ const handleSelectOption = () => {
             {{ image.display_name }}.{{ image.format }}
           </div>
         </div>
-        <div class="flex justify-content-center w-full text-2xl mt-8">
+
+        <div v-else class="flex justify-content-center w-full text-2xl mt-8">
           <div class="text-black-alpha-60">No data found!</div>
         </div>
+        
       </div>
     </div>
   </div>
