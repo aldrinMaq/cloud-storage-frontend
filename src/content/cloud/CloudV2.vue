@@ -198,16 +198,16 @@ const handleSelectOption = () => {
 <template>
   <Toast :position="'top-center'"/>
   <div class="grid grid-nogutter">
-    <div class="col-12 xl:col-2 sm:col-12 flex justify-content-between">
+    <div class="col-12 flex justify-content-between">
       <h1 class="cursor-pointer ml-2" @click="goToHome">
         <span>Your Cloud</span>
       </h1>
-      <div @click="goToSetting" class="flex align-items-center xl:mr-6 cursor-pointer">
+      <div @click="goToSetting" class="flex align-items-center justify-content-end cursor-pointer">
         <!--        <i class="pi pi-cog text-5xl"></i>-->
         <Avatar :label="firstInitial" class="mr-2" size="large" style="background-color:#2196F3; color: #ffffff" shape="circle" />
       </div>
     </div>
-    <div class="grid-nogutter col-12 xl:col-4 flex align-items-center mb-2">
+    <div class="grid-nogutter col-12 flex align-items-center mb-2">
       <span class="p-input-icon-left w-full px-2">
               <i class="pi pi-search"/>
               <InputText class="w-full border-round-left-2xl	border-round-right-2xl"
