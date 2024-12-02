@@ -198,8 +198,14 @@ const handleSelectOption = () => {
 <template>
   <Toast :position="'top-center'"/>
   <div class="grid grid-nogutter">
-    <div class="col-12 xl:col-2 sm:col-12 ">
-      <h1 class="cursor-pointer flex justify-content-center" @click="goToHome">Your Cloud</h1>
+    <div class="col-12 xl:col-2 sm:col-12 flex justify-content-between">
+      <h1 class="cursor-pointer ml-2" @click="goToHome">
+        <span>Your Cloud</span>
+      </h1>
+      <div @click="goToSetting" class="flex align-items-center xl:mr-6 cursor-pointer">
+        <!--        <i class="pi pi-cog text-5xl"></i>-->
+        <Avatar :label="firstInitial" class="mr-2" size="large" style="background-color:#2196F3; color: #ffffff" shape="circle" />
+      </div>
     </div>
     <div class="grid-nogutter col-12 xl:col-4 flex align-items-center mb-2">
       <span class="p-input-icon-left w-full px-2">
@@ -208,12 +214,12 @@ const handleSelectOption = () => {
                          placeholder="Search in cloud"
                          v-model="searchVal"/>
       </span>
-      <div class="col-2">
+      <div class="col-2 mr-2">
         <Button @click="searchImagesByDisplayName" label="Search" class="w-full px-0"/>
       </div>
     </div>
 
-    <div class="col-10 xl:col-4 flex justify-content-end ">
+    <div class="col-12 flex justify-content-end ">
       <div class="px-2 flex justify-content-between xl:justify-content-end align-items-center gap-2 w-full">
         <!-- Custom styled label for the file input -->
         <label for="file-upload" class="custom-file-label mt-1 ">Choose File</label>
@@ -228,12 +234,7 @@ const handleSelectOption = () => {
         </Button>
       </div>
     </div>
-    <div class="col-2 xl:col-2 flex justify-content-end">
-      <div @click="goToSetting" class="flex align-items-center xl:mr-6 cursor-pointer">
-<!--        <i class="pi pi-cog text-5xl"></i>-->
-        <Avatar :label="firstInitial" class="mr-2" size="large" style="background-color:#2196F3; color: #ffffff" shape="circle" />
-      </div>
-    </div>
+
   </div>
   <template v-if="images.length">
     <div v-if="!isSelectMode" class="col-12 xl:col-8 xl:col-offset-2 flex justify-content-end xl:pr-0">
@@ -268,7 +269,7 @@ const handleSelectOption = () => {
         <div v-else class="flex justify-content-center w-full text-2xl mt-8">
           <div class="text-black-alpha-60">No data found!</div>
         </div>
-        
+
       </div>
     </div>
   </div>
